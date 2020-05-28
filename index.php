@@ -1,7 +1,13 @@
 <?php
 function show_form() {
     ?>
-    <p><b>No URLs received.</b></p>
+    <h1>Enter URLs below</h1>
+    <form action="/" method="get">
+    <input type="text" name="urls[]" placeholder="URL 1"/><br>
+    <input type="text" name="urls[]" placeholder="URL 2"/><br>
+    <input type="text" name="urls[]" placeholder="URL 3"/><br>
+    <input type="submit" title="Submit"/>
+    </form>
     <?php die();
 }
 
