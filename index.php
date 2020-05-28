@@ -7,33 +7,48 @@ use DOMXPath;
 use DOMNode;
 use DOMNodeList;
 
-/******************************************************************************
- * Minimal CSS Style
- ******************************************************************************/
-
-?>
-<style type="text/css">
-body {
-    font-size: 18px;
-    background: #ddd;
-}
-body > article,
-body > section {
-    max-width: 50em;
-    margin: 3em auto;
-}
-.now_page_item {
-    background: #fff;
-    padding: 1em 1em;
-    border-radius: 0.2em;
-}
-</style>
-<?php
-
 
 /******************************************************************************
  * Helper functions
  ******************************************************************************/
+
+function head() {
+    ?>
+    <html>
+    <head>
+    <title>/now Page Aggregator</title>
+    <style type="text/css">
+    <!--
+    body {
+        font-size: 18px;
+        background: #ddd;
+    }
+    article, section, footer {
+        max-width: 50em;
+        margin: 3em auto;
+    }
+    .error { background: red; color: white; }
+    .now_page_item {
+        background: #fff;
+        padding: 1em 1em;
+        border-radius: 0.2em;
+    }
+    -->
+    </style>
+    </head>
+    <body>
+    <?php
+}
+
+function foot() {
+    ?>
+    <footer>
+      <a href="https://github.com/ChristianTietze/NowPageAggregatorPHP">Source on GitHub</a>
+    </footer>
+    </body>
+    </html>
+    <?php
+}
 
 function show_form() {
     ?>
@@ -49,7 +64,7 @@ function show_form() {
     <input type="submit" value="Fetch Pages"/>
     </form>
     </section>
-    <?php die();
+    <?php
 }
 
 // From https://github.com/microformats/php-mf2/blob/master/Mf2/Parser.php
@@ -140,26 +155,45 @@ function obtain_now_page($url) {
     return strip_tags($content, $allowed_tags);
 }
 
+function show_error($msg) {
+    ?>
+    <section class="error">
+    <p><?= $msg; ?></p>
+    </section>
+    <?php
+}
+
 
 /******************************************************************************
  * Main script to process /now pages
  ******************************************************************************/
 
 if (!isset($_GET['urls'])) {
+    head();
     show_form();
+    foot();
+    die();
 }
 
 $urls = $_GET['urls'];
 
 if (!$urls || !is_array($urls)) {
+    head();
+    show_error("Invalid <code>urls</code> parameter. Array expected.");
     show_form();
+    foot();
+    die();
 }
 
 // Ignore empty form input
 $urls = array_filter($urls, function ($url) { return !empty($url); });
 
 if (empty($urls)) {
+    head();
+    show_error("URLs array is empty.");
     show_form();
+    foot();
+    die();
 }
 
 // Limit to 10 and remove duplicates.
@@ -174,6 +208,8 @@ foreach ($urls as $url) {
     }
     $all_pages[$url] = obtain_now_page($url);
 }
+
+head();
 
 // Render Table of Contents.
 echo '<section class="item toc">';
@@ -199,3 +235,5 @@ foreach ($all_pages as $url => $content) {
       </article>
     </section>
 <?php }
+
+foot();
