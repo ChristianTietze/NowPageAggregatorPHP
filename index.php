@@ -11,6 +11,10 @@ function show_form() {
     <?php die();
 }
 
+function obtain_now_page($url) {
+    return "foo";
+}
+
 if (!isset($_GET['urls'])) {
     show_form();
 }
@@ -21,6 +25,30 @@ if (!$urls || !is_array($urls)) {
     show_form();
 }
 
+// Parse all pages
+$all_pages = [];
 foreach ($urls as $url) {
-    echo $url . "<br>";
+    $all_pages[$url] = obtain_now_page($url);
 }
+
+// Render Table of Contents
+echo "<h1>Table of Contents</h1>";
+echo "<ul>";
+$i = 0;
+foreach ($all_pages as $url => $content) {
+    $i++;?>
+    <li><a href="#<?=$i?>"><?=$url?></a></li>
+<?php }
+echo "</ul>";
+
+
+// Render actual pages
+$i = 0;
+foreach ($all_pages as $url => $content) {
+    $i++;?>
+    <hr>
+    <article>
+    <h1 name="<?=$i?>">From: <?=$url?></h1>
+    <?php echo $content; ?>
+    </article>
+<?php }
