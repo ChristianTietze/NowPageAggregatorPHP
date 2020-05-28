@@ -39,6 +39,7 @@ function show_form() {
     ?>
     <section class="form">
     <h1>Enter URLs below</h1>
+    <p>The form shows 5, but you can pass up to 10 as URL parameters.</p>
     <form action="/" method="get">
     <input type="text" name="urls[]" placeholder="URL 1"/><br>
     <input type="text" name="urls[]" placeholder="URL 2"/><br>
@@ -160,6 +161,9 @@ $urls = array_filter($urls, function ($url) { return !empty($url); });
 if (empty($urls)) {
     show_form();
 }
+
+// Limit to 10 and remove duplicates.
+$urls = array_unique(array_slice($urls, 0, 10));
 
 // Parse all pages
 $all_pages = [];
