@@ -29,10 +29,10 @@ Download the script and run it locally with PHP.
 
 This is how you download the code and access the PHP script in your browser:
 
-   $ git clone https://github.com/ChristianTietze/NowPageAggregatorPHP
-   $ cd NowPageAggregatorPHP/
-   $ php -S localhost:3333
-   PHP 7.4.6 Development Server (http://localhost:3333) started
+    $ git clone https://github.com/ChristianTietze/NowPageAggregatorPHP
+    $ cd NowPageAggregatorPHP/
+    $ php -S localhost:3333
+    PHP 7.4.6 Development Server (http://localhost:3333) started
 
 The server is now running. Head to <http://localhost:3333/> to see a form where you can add your favorite /now page URLs.
 
