@@ -52,15 +52,7 @@ function unicodeToHtmlEntities($input) {
     return mb_convert_encoding($input, 'HTML-ENTITIES', mb_detect_encoding($input));
 }
 
-function obtain_now_page($url) {
-    // Hide DOM parsing errors from the page output.
-    libxml_use_internal_errors(true);
-    
-    $html = fetch($url);
-    if (!$html) {
-        return "(Could not resolve URL)";
-    }
-    
+function extract_content($html) {
     $doc = new DOMDocument();
     $doc->loadHTML(unicodeToHtmlEntities($html));
     $xpath = new DOMXPath($doc);
@@ -71,7 +63,7 @@ function obtain_now_page($url) {
     }
 
     // Ignore multiple `h-now` items. Remember, this is not a feed!
-    $h_now_element = $xpath->query('.//*[contains(@class,"h-now")]')->item(0);
+    $h_now_element = $xpath->query(".//*[contains(@class,\"h-now\")]")->item(0);
     if ($h_now_element) {
         return $doc->saveHTML($h_now_element);
     }
@@ -84,8 +76,35 @@ function obtain_now_page($url) {
     if ($content_wrapper_node) {
         return $doc->saveHTML($content_wrapper_node);
     }
+
+    return null;
+}
+                   
+function obtain_now_page($url) {
+    // Hide DOM parsing errors from the page output.
+    libxml_use_internal_errors(true);
     
-    return "(No content wrapper found)";
+    $html = fetch($url);
+    if (!$html) {
+        return "(Could not resolve URL)";
+    }
+
+    $content = extract_content($html);
+    if (!$content) {
+        return "(No content wrapper found)";
+    }
+
+    // Remove all but the essential content tags for reading.
+    $allowed_tags = array(
+        "h1", "h2", "h3", "h4", "h5", "h6",
+        "table", "tr", "td", "th", "tbody", "thead",
+        "li", "ol", "ul", "dl", "dt", "dh",
+        "br", "hr",
+        "p", "span",
+        "code", "abbr", "a",
+        "b", "i", "u", "s", "strong", "em"
+    );
+    return strip_tags($content, $allowed_tags);
 }
 
 if (!isset($_GET['urls'])) {
