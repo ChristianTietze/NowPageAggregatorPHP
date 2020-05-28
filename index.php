@@ -7,15 +7,40 @@ use DOMXPath;
 use DOMNode;
 use DOMNodeList;
 
+// Render minimal CSS
+?>
+<style type="text/css">
+body {
+    font-size: 18px;
+    background: #ddd;
+}
+body > article,
+body > section {
+    max-width: 50em;
+    margin: 3em auto;
+}
+.now_page_item {
+    background: #fff;
+    padding: 1em 1em;
+    border-radius: 0.2em;
+}
+</style>
+<?php
+
+
 function show_form() {
     ?>
+    <section class="form">
     <h1>Enter URLs below</h1>
     <form action="/" method="get">
     <input type="text" name="urls[]" placeholder="URL 1"/><br>
     <input type="text" name="urls[]" placeholder="URL 2"/><br>
     <input type="text" name="urls[]" placeholder="URL 3"/><br>
-    <input type="submit" title="Submit"/>
+    <input type="text" name="urls[]" placeholder="URL 4"/><br>
+    <input type="text" name="urls[]" placeholder="URL 5"/><br>
+    <input type="submit" value="Fetch Pages"/>
     </form>
+    </section>
     <?php die();
 }
 
@@ -126,26 +151,6 @@ foreach ($urls as $url) {
     }
     $all_pages[$url] = obtain_now_page($url);
 }
-
-// Render minimal CSS
-?>
-<style type="text/css">
-body {
-    font-size: 18px;
-    background: #ddd;
-}
-body > article,
-body > section {
-    max-width: 50em;
-    margin: 3em auto;
-}
-.now_page_item {
-    background: #fff;
-    padding: 1em 1em;
-    border-radius: 0.2em;
-}
-</style>
-<?php
 
 // Render Table of Contents.
 echo '<section class="item toc">';
