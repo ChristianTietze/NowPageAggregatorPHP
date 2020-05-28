@@ -7,7 +7,10 @@ use DOMXPath;
 use DOMNode;
 use DOMNodeList;
 
-// Render minimal CSS
+/******************************************************************************
+ * Minimal CSS Style
+ ******************************************************************************/
+
 ?>
 <style type="text/css">
 body {
@@ -27,6 +30,10 @@ body > section {
 </style>
 <?php
 
+
+/******************************************************************************
+ * Helper functions
+ ******************************************************************************/
 
 function show_form() {
     ?>
@@ -132,6 +139,11 @@ function obtain_now_page($url) {
     return strip_tags($content, $allowed_tags);
 }
 
+
+/******************************************************************************
+ * Main script to process /now pages
+ ******************************************************************************/
+
 if (!isset($_GET['urls'])) {
     show_form();
 }
@@ -142,6 +154,7 @@ if (!$urls || !is_array($urls)) {
     show_form();
 }
 
+// Ignore empty form input
 $urls = array_filter($urls, function ($url) { return !empty($url); });
 
 if (empty($urls)) {
