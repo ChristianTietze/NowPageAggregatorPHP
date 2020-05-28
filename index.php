@@ -1,4 +1,12 @@
 <?php
+namespace HNow;
+
+use DOMDocument;
+use DOMElement;
+use DOMXPath;
+use DOMNode;
+use DOMNodeList;
+
 function show_form() {
     ?>
     <h1>Enter URLs below</h1>
@@ -11,8 +19,73 @@ function show_form() {
     <?php die();
 }
 
+// From https://github.com/microformats/php-mf2/blob/master/Mf2/Parser.php
+function fetch($url, &$curlInfo=null) {
+	$ch = curl_init();
+	curl_setopt($ch, CURLOPT_URL, $url);
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+	curl_setopt($ch, CURLOPT_HEADER, 0);
+	curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+    curl_setopt($ch, CURLOPT_MAXREDIRS, 5);
+	curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+		'Accept: text/html'
+	));
+	$html = curl_exec($ch);
+	$info = $curlInfo = curl_getinfo($ch);
+	curl_close($ch);
+    
+    // var_dump($info);
+    
+	if (strpos(strtolower($info['content_type']), 'html') === false) {
+		// The content was not delivered as HTML, do not attempt to parse it.
+		return null;
+	}
+
+    // Eventually report final URL after redirects?
+	// $url = $info['url'];
+
+    return $html;
+}
+
+// From https://github.com/microformats/php-mf2/blob/master/Mf2/Parser.php
+function unicodeToHtmlEntities($input) {
+    return mb_convert_encoding($input, 'HTML-ENTITIES', mb_detect_encoding($input));
+}
+
 function obtain_now_page($url) {
-    return "foo";
+    // Hide DOM parsing errors from the page output.
+    libxml_use_internal_errors(true);
+    
+    $html = fetch($url);
+    if (!$html) {
+        return "(Could not resolve URL)";
+    }
+    
+    $doc = new DOMDocument();
+    $doc->loadHTML(unicodeToHtmlEntities($html));
+    $xpath = new DOMXPath($doc);
+
+    // Ignore <template> elements as per the HTML5 spec
+    foreach ($xpath->query("//template") as $templateEl) {
+        $templateEl->parentNode->removeChild($templateEl);
+    }
+
+    // Ignore multiple `h-now` items. Remember, this is not a feed!
+    $h_now_element = $xpath->query('.//*[contains(@class,"h-now")]')->item(0);
+    if ($h_now_element) {
+        return $doc->saveHTML($h_now_element);
+    }
+
+    // Fall back to generic content identifiers.
+    $content_wrapper_node = $doc->getElementById("content")
+                          ?? $doc->getElementsByTagName("main")->item(0)
+                          ?? $doc->getElementsByTagName("article")->item(0);
+
+    if ($content_wrapper_node) {
+        return $doc->saveHTML($content_wrapper_node);
+    }
+    
+    return "(No content wrapper found)";
 }
 
 if (!isset($_GET['urls'])) {
@@ -28,6 +101,10 @@ if (!$urls || !is_array($urls)) {
 // Parse all pages
 $all_pages = [];
 foreach ($urls as $url) {
+    // Only request each URL once.
+    if (array_key_exists($url, $urls)) {
+        continue;
+    }
     $all_pages[$url] = obtain_now_page($url);
 }
 
