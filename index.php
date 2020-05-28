@@ -145,12 +145,12 @@ function obtain_now_page($url) {
     // Remove all but the essential content tags for reading.
     $allowed_tags = array(
         "h1", "h2", "h3", "h4", "h5", "h6",
-        "table", "tr", "td", "th", "tbody", "thead",
+        "table", "tr", "td", "th", "tbody", "thead", "tfoot",
         "li", "ol", "ul", "dl", "dt", "dh",
         "br", "hr",
-        "p", "span",
-        "code", "abbr", "a",
-        "b", "i", "u", "s", "strong", "em"
+        "blockquote", "p", 
+        "code", "abbr", "del", "a", "span", "mark", "small",
+        "b", "i", "u", "s", "strong", "em", "strike"
     );
     return strip_tags($content, $allowed_tags);
 }
