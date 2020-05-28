@@ -142,6 +142,12 @@ if (!$urls || !is_array($urls)) {
     show_form();
 }
 
+$urls = array_filter($urls, function ($url) { return !empty($url); });
+
+if (empty($urls)) {
+    show_form();
+}
+
 // Parse all pages
 $all_pages = [];
 foreach ($urls as $url) {
