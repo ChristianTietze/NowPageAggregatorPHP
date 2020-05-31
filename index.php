@@ -54,13 +54,18 @@ function show_form() {
     ?>
     <section class="form">
     <h1>Enter URLs below</h1>
-    <p>The form shows 5, but you can pass up to 10 as URL parameters.</p>
+    <p>You can pass up to 10 as URL parameters. 11+ will be ignored. (We want to be good internet citizens in this demo.)</p>
     <form action="/" method="get">
     <input type="text" name="urls[]" placeholder="URL 1"/><br>
     <input type="text" name="urls[]" placeholder="URL 2"/><br>
     <input type="text" name="urls[]" placeholder="URL 3"/><br>
     <input type="text" name="urls[]" placeholder="URL 4"/><br>
     <input type="text" name="urls[]" placeholder="URL 5"/><br>
+    <input type="text" name="urls[]" placeholder="URL 6"/><br>
+    <input type="text" name="urls[]" placeholder="URL 7"/><br>
+    <input type="text" name="urls[]" placeholder="URL 8"/><br>
+    <input type="text" name="urls[]" placeholder="URL 9"/><br>
+    <input type="text" name="urls[]" placeholder="URL 10"/><br>
     <input type="submit" value="Fetch Pages"/>
     </form>
     </section>
