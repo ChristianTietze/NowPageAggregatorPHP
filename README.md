@@ -2,6 +2,11 @@
 
 A simple tool to fetch the contents of [/now pages](https://sivers.org/nowff) and display them all on a single page.
 
+Test it online! **Thanks to [@crazko](https://github.com/cratzko/) for setting this up:**
+
+<a href="https://hnow.herokuapp.com/"><img src="https://img.shields.io/static/v1?label=Use%20Demo&message=on%20Heroku&color=blueviolet&style=for-the-badge&logo=heroku"></a>  
+`https://hnow.herokuapp.com`
+
 ## Why!
 
 /now pages are like personal bulletin boards. They are like Facebook status updates, but different. They reflect the overall current status of someone. 
@@ -41,6 +46,14 @@ The server is now running. Head to <http://localhost:3333/> to see a form where 
 When you submit the form, you will see the relevant portion of the /now pages in your personal summary: ([See full screenshot](assets/screenshot_full.png))
 
 [![Screenshot](assets/screenshot.png)](assets/screenshot_full.png)
+
+
+## Test it in the cloud
+
+<https://hnow.herokuapp.com>
+
+<a href="https://hnow.herokuapp.com/"><img src="https://img.shields.io/static/v1?label=Use%20Demo&message=on%20Heroku&color=blueviolet&style=for-the-badge&logo=heroku"></a>
+
 
 ## License
 
