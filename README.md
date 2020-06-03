@@ -2,10 +2,11 @@
 
 A simple tool to fetch the contents of [/now pages](https://sivers.org/nowff) and display them all on a single page.
 
-Test it online! **Thanks to [@crazko](https://github.com/cratzko/) for setting this up:**
+Test it online! **Thanks to [@crazko](https://github.com/crazko/) for setting this up:**
 
 <a href="https://hnow.herokuapp.com/"><img src="https://img.shields.io/static/v1?label=Use%20Demo&message=on%20Heroku&color=blueviolet&style=for-the-badge&logo=heroku"></a>  
-`https://hnow.herokuapp.com`
+
+https://hnow.herokuapp.com
 
 ## Why!
 
