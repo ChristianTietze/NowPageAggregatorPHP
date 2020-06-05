@@ -4,13 +4,13 @@ A simple tool to fetch the contents of [/now pages](https://sivers.org/nowff) an
 
 Test it online! **Thanks to [@crazko](https://github.com/crazko/) for setting this up:**
 
-<a href="https://hnow.herokuapp.com/"><img src="https://img.shields.io/static/v1?label=Use%20Demo&message=on%20Heroku&color=blueviolet&style=for-the-badge&logo=heroku"></a>  
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
 
-https://hnow.herokuapp.com
+or visit https://hnow.herokuapp.com (may be outdated).
 
 ## Why!
 
-/now pages are like personal bulletin boards. They are like Facebook status updates, but different. They reflect the overall current status of someone. 
+/now pages are like personal bulletin boards. They are like Facebook status updates, but different. They reflect the overall current status of someone.
 
 If you want to catch up with a pal, you don't have to browse through the last 2 months of their social media posts. Instead, you can see at a glance what they think is important in their lived on their /now page.
 
@@ -47,14 +47,6 @@ The server is now running. Head to <http://localhost:3333/> to see a form where 
 When you submit the form, you will see the relevant portion of the /now pages in your personal summary: ([See full screenshot](assets/screenshot_full.png))
 
 [![Screenshot](assets/screenshot.png)](assets/screenshot_full.png)
-
-
-## Test it in the cloud
-
-<https://hnow.herokuapp.com>
-
-<a href="https://hnow.herokuapp.com/"><img src="https://img.shields.io/static/v1?label=Use%20Demo&message=on%20Heroku&color=blueviolet&style=for-the-badge&logo=heroku"></a>
-
 
 ## License
 
